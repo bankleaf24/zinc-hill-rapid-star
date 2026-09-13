@@ -1,0 +1,294 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* LS Electric InfoU — light-blue SCADA theme */
+@theme {
+  --font-sans: "Segoe UI", "Malgun Gothic", "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "Consolas", "IBM Plex Mono", ui-monospace, monospace;
+
+  --color-bg: #d7eefb;
+  --color-bg-elevated: #eaf6fd;
+  --color-surface: #ffffff;
+  --color-surface-2: #f3f9fe;
+  --color-surface-3: #e3f2fb;
+  --color-fg: #12324f;
+  --color-fg-muted: #3d617c;
+  --color-fg-subtle: #5a7a96;
+  --color-border: #b7d4ea;
+  --color-border-strong: #86b6d6;
+
+  --color-primary: #1e6fd9;
+  --color-primary-dim: #0d4a9e;
+  --color-primary-fg: #ffffff;
+  --color-ls-blue: #0052b4;
+  --color-ls-navy: #003366;
+  --color-ls-red: #e30613;
+
+  --color-water: #0284c7;
+  --color-water-deep: #0369a1;
+  --color-water-glow: #7dd4ff;
+
+  --color-run: #008c3a;
+  --color-run-dim: #1b5e20;
+  --color-stop: #64748b;
+  --color-fault: #e11d48;
+  --color-fault-dim: #b71c1c;
+  --color-warn: #c47e00;
+  --color-warn-dim: #ff6f00;
+  --color-auto: #0284c7;
+  --color-manual: #7c3aed;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+
+  --shadow-panel: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 2px 10px rgba(15, 70, 120, 0.08);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    color-scheme: light;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-primary) 28%, transparent);
+  }
+}
+
+@layer utilities {
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .panel {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-panel);
+  }
+
+  .infou-titlebar {
+    background: linear-gradient(180deg, #2b7ad4 0%, #1a5fb4 50%, #154e96 100%);
+    border-bottom: 1px solid #3d8adf;
+  }
+
+  .infou-chrome {
+    background: linear-gradient(180deg, #3d8ee0 0%, #1e6fd9 100%);
+  }
+
+  .status-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    flex-shrink: 0;
+  }
+
+  .status-dot-run {
+    background: var(--color-run);
+    box-shadow: 0 0 8px color-mix(in oklab, var(--color-run) 70%, transparent);
+  }
+
+  .status-dot-fault {
+    background: var(--color-fault);
+    box-shadow: 0 0 8px color-mix(in oklab, var(--color-fault) 70%, transparent);
+    animation: pulse-fault 1.2s ease-in-out infinite;
+  }
+
+  .status-dot-stop {
+    background: var(--color-stop);
+  }
+
+  .status-dot-warn {
+    background: var(--color-warn);
+    box-shadow: 0 0 8px color-mix(in oklab, var(--color-warn) 60%, transparent);
+  }
+
+  .pipe-flow {
+    stroke-dasharray: 10 8;
+    animation: pipe-flow 0.85s linear infinite;
+  }
+
+  .pipe-flow-slow {
+    stroke-dasharray: 10 10;
+    animation: pipe-flow 1.6s linear infinite;
+  }
+
+  .pipe-flow-fast {
+    stroke-dasharray: 8 6;
+    animation: pipe-flow 0.55s linear infinite;
+  }
+
+  .pipe-glow {
+    filter: drop-shadow(0 0 3px rgba(14, 165, 233, 0.55));
+  }
+
+  .pipe-pulse {
+    stroke-dasharray: 4 28;
+    animation: pipe-flow 1.1s linear infinite;
+    opacity: 0.85;
+  }
+
+  .pid-flow-y {
+    stroke-dasharray: 12 8;
+    animation: pipe-flow 0.85s linear infinite;
+    shape-rendering: geometricPrecision;
+  }
+
+  .pid-flow-p {
+    stroke-dasharray: 12 8;
+    animation: pipe-flow 1.15s linear infinite;
+    shape-rendering: geometricPrecision;
+  }
+
+  .pid-canvas {
+    background: var(--color-bg);
+  }
+
+  .water-shimmer {
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--color-water-glow) 55%, transparent) 0%,
+      var(--color-water) 40%,
+      var(--color-water-deep) 100%
+    );
+  }
+
+  .scada-grid {
+    background-image:
+      linear-gradient(color-mix(in oklab, var(--color-border) 55%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in oklab, var(--color-border) 55%, transparent) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .tag-cell {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .flow-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .flow-indicator-dot {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 9999px;
+    background: var(--color-water);
+    box-shadow: 0 0 6px color-mix(in oklab, var(--color-water) 80%, transparent);
+    animation: flow-pulse 1s ease-in-out infinite;
+  }
+}
+
+@keyframes pipe-flow {
+  to {
+    stroke-dashoffset: -36;
+  }
+}
+
+@keyframes pulse-fault {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes flow-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.75);
+  }
+}
+
+@keyframes water-surface {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(-1.5px);
+    opacity: 0.9;
+  }
+}
+
+@keyframes droplet {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+.tank-surface-wave {
+  animation: water-surface 2.4s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.tank-fill-shimmer stop {
+  animation: shimmer-stop 2.8s ease-in-out infinite;
+}
+
+@keyframes shimmer-stop {
+  0%,
+  100% {
+    stop-opacity: 0.85;
+  }
+  50% {
+    stop-opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pipe-flow,
+  .pipe-flow-slow,
+  .pipe-flow-fast,
+  .pipe-pulse,
+  .pid-flow-y,
+  .pid-flow-p,
+  .status-dot-fault,
+  .flow-indicator-dot,
+  .tank-surface-wave {
+    animation: none;
+  }
+}

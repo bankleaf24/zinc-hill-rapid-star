@@ -1,0 +1,17 @@
+node_modules
+.tanstack
+dist
+.output
+.vercel
+.nitro
+screenshots
+artifacts
+attachments
+*.pdf
+public/infou-export
+.node_modules.lock
+.DS_Store
+*.log
+.env
+.env.*
+!/.grok/app-env.json
